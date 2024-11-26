@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Postagem</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/criar_postagem.css') }}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>
+                    <a href="{{ url_for('index') }}" style="text-decoration: none; color: inherit;">ReelTalk</a>
+                </h1>
+            </div>
+            <div class="menu">
+                {% if 'usuario_id' in session %}
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('cadastro') }}">Registre-se</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container">
+            <h1 class="postagem-title">Criar Postagem</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}  <!-- Token CSRF -->
+                <div class="form-group">
+                    {{ form.titulo.label }}<br>
+                    {{ form.titulo(size=40, placeholder="Título do filme") }}<br>
+                    {% for error in form.titulo.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.review.label }}<br>
+                    {{ form.review(rows=5, cols=40, placeholder="Conte sobre o filme...") }}<br>
+                    {% for error in form.review.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.nota.label }}<br>
+                    {{ form.nota(id="nota") }}<br>
+                    {% for error in form.nota.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.imagem_url.label }}<br>
+                    {{ form.imagem_url(size=40, placeholder="URL da imagem") }}<br>
+                    {% for error in form.imagem_url.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                
+
+                <button type="submit" class="submit-btn">Postar Review</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #8e86e6, #2e2d59, #2e2d59); 
+    font-family: League Spartan;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-box {
+    background-color: #0d1329; 
+    padding: 50px 40px;
+    border-radius: 20px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.login-box h1 {
+    font-size: 40px; 
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 30px;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #0d1329;
+    padding: 15px 30px;
+    border-radius: 30px;
+}
+
+
+input {
+    width: 100%;
+    padding: 18px; 
+    margin: 15px 0;
+    border: none;
+    border-radius: 35px; 
+    font-size: 18px;
+    color: #333;
+    background-color: #fff;  
+}
+
+input::placeholder {
+    color: #bbb;
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    background-color: #675ecf;
+    border: none;
+    border-radius: 35px; 
+    color: #fff;
+    font-size: 20px; 
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #5a4ae6;
+}

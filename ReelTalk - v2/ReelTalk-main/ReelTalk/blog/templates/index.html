@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meu Blog{% endblock%}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>ReelTalk</h1>
+    </div>
+    <div class="menu">
+        {% if 'usuario_id' in session %}
+            <div class="container1">
+                <a href="{{ url_for('criar_postagem') }}">Criar postagem</a>
+            </div>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('cadastro') }}">Registre-se</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="welcome-message">
+    {% if 'usuario_id' in session %}
+        <p>Olá, {{ session['nome_usuario'] }}! Bem-vindo(a) de volta!</p>
+        <img src="{{ url_for('static', filename='images/rolo_de_filme.png') }}" alt="Imagem de boas-vindas">
+    {% endif %}
+</div>
+
+<div class="centralizado">
+    <div class="container3"></div>
+    <h2>REVIEWS</h2>
+    <div class="container4"></div>
+</div>
+
+<ul>
+    <div class="container5">
+        {% for postagem in postagens %}
+        <li class="postagem-card">
+            <div class="postagem-image">
+                <img src="{{ url_for('static', filename='images/filme.jpg') }}" alt="Imagem do filme">
+            </div>
+            <div class="postagem-info">
+                <h3>
+                    <a href="{{ url_for('detalhe_postagem', postagem_id=postagem['id']) }}">
+                        {{ postagem['titulo'] }} 
+                    </a>
+                </h3>
+                <p>@{{ postagem.usuario.nome }}</p>
+                <p class="review-text">{{ postagem['review'] }}</p>
+                <div class="stars">
+                    {% for i in range(postagem['nota']) %}
+                    <span class="star filled">★</span>
+                    {% endfor %}
+                    {% for i in range(5 - postagem['nota']) %}
+                    <span class="star">★</span>
+                    {% endfor %}
+                </div>
+                {% if postagem['usuario_id'] == session['usuario_id'] %}
+                <a href="{{ url_for('excluir_postagem', postagem_id=postagem['id']) }}" class="excluir-btn">Excluir</a>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </div>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ postagem.titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalhe_postagem.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>
+                        <a href="{{ url_for('index') }}" style="text-decoration: none; color: inherit;">ReelTalk</a>
+                    </h1>
+                </div>
+                
+                <div class="menu">
+                    {% if 'usuario_id' in session %}
+                        <div class="container1">
+                            <a href="{{ url_for('criar_postagem') }}">Criar postagem</a>
+                        </div>
+                        <a href="{{ url_for('logout') }}">Sair</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}">Login</a>
+                        <a href="{{ url_for('cadastro') }}">Registre-se</a>
+                    {% endif %}
+                </div>
+            </nav>
+    </header>
+    <main>
+        <div class="postagem-container">
+            <h1>{{ postagem.titulo }}</h1>
+            <img src="{{ url_for('static', filename='images/filme.jpg') }}" alt="Imagem do filme" class="postagem-img">
+            <div class="postagem-detalhes">
+                <p class="autor">@{{ postagem.usuario.nome }}</p>
+                <div class="stars">
+                    {% for i in range(postagem.nota) %}
+                    <span class="star filled">★</span>
+                    {% endfor %}
+                    {% for i in range(5 - postagem.nota) %}
+                    <span class="star">★</span>
+                    {% endfor %}
+                </div>
+                <p class="review">{{ postagem.review }}</p>
+            
+                {% if postagem.usuario_id == session.usuario_id %}
+                <div class="postagem-acoes">
+                    <a href="{{ url_for('editar_postagem', postagem_id=postagem.id) }}" class="editar-btn">Editar Postagem</a>
+                    <form action="{{ url_for('excluir_postagem', postagem_id=postagem.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Você tem certeza que deseja excluir esta postagem?');" class="excluir-postagem-btn">Excluir Postagem</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            
+            
+            <div class="comentarios-container">
+                <h2>COMENTÁRIOS</h2>
+                <form method="POST" action="{{ url_for('detalhe_postagem', postagem_id=postagem.id) }}">
+                    <textarea name="conteudo" placeholder="Adicione um comentário..." required></textarea>
+                    <button type="submit">Comentar</button>
+                </form>
+                <div class="comentarios-lista">
+                    {% for comentario in comentarios %}
+                        <div class="comentario">
+                            <p class="autor">@{{ comentario.usuario.nome }}</p>
+                            <p>{{ comentario.conteudo }}</p>
+                            <p class="hora-comentario">
+                                Comentado em: {{ comentario.data_criacao.strftime('%d/%m/%Y %H:%M') if comentario.data_criacao else 'Data não disponível' }}
+                            </p>
+                            {% if comentario.usuario_id == session.usuario_id %}
+                                <a href="{{ url_for('excluir_comentario', comentario_id=comentario.id) }}" class="excluir-btn">Excluir</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - ReelTalk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+</head>
+<body>
+    <div class="cadastro-container">
+        <div class="cadastro-box">
+            <h1>Cadastro</h1>
+            <form method="POST" action="/cadastro" novalidate>
+                {{ formulario.hidden_tag() }}
+
+                <div class="input-group">
+                    {{ formulario.nome(class="form-control", placeholder="Nome Completo") }}
+                </div>
+                <div class="input-group">
+                    {{ formulario.nome_usuario(class="form-control", placeholder="Nome de Usuário") }}
+                </div>
+                <div class="input-group">
+                    {{ formulario.email(class="form-control", placeholder="Email") }}
+                </div>
+                <div class="input-group">
+                    {{ formulario.senha(class="form-control", type="password", placeholder="Senha") }}
+                </div>
+                <div class="input-group">
+                    {{ formulario.niver(class="form-control", type="date") }}
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
